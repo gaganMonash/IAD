@@ -1,0 +1,25 @@
+﻿@model Studio7.Models.UserRoleViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Hi @Html.DisplayFor(model => model.user.UserName)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayFor(model => model.role.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.role.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+</p>

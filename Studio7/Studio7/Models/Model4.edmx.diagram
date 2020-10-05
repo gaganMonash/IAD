@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="174b041e151e429187c12f13ae6d31fb" Name="Diagram1">
+        <EntityTypeShape EntityType="Model1.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.AspNetRole" Width="1.5" PointX="10.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.AspNetUserClaim" Width="1.5" PointX="15.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.AspNetUserLogin" Width="1.5" PointX="15.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.AspNetUser" Width="1.5" PointX="13" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Broadcast" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.CovidCentre" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Email" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.QuestionBank" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Rating" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Respons" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Student" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Unit" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.User" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Users_Administrator" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Users_Doctor" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Users_Patient" Width="1.5" PointX="8.25" PointY="5.5" IsExpanded="true" />
+        <AssociationConnector Association="Model1.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_DoctorBroadcast" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_AdministratorAddCovidCentre" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_DoctorEmail" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_PatientEmail" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_DoctorRating" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_PatientRating" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK__Units__StudentId__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_Administrator_inherits_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_Doctor_inherits_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_Patient_inherits_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_DoctorPatient" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

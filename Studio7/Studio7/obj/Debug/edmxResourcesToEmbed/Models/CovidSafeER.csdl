@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CovidSafeER" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="CovidSafeERContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Users" EntityType="CovidSafeER.User" />
+    <EntitySet Name="CovidCentres" EntityType="CovidSafeER.CovidCentre" />
+    <AssociationSet Name="AdministratorAddCovidCentre" Association="CovidSafeER.AdministratorAddCovidCentre">
+      <End Role="Administrator" EntitySet="Users" />
+      <End Role="CovidCentre" EntitySet="CovidCentres" />
+    </AssociationSet>
+    <EntitySet Name="Ratings" EntityType="CovidSafeER.Rating" />
+    <AssociationSet Name="PatientRating" Association="CovidSafeER.PatientRating">
+      <End Role="Patient" EntitySet="Users" />
+      <End Role="Rating" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="DoctorRating" Association="CovidSafeER.DoctorRating">
+      <End Role="Doctor" EntitySet="Users" />
+      <End Role="Rating" EntitySet="Ratings" />
+    </AssociationSet>
+    <EntitySet Name="QuestionBanks" EntityType="CovidSafeER.QuestionBank" />
+    <EntitySet Name="Emails" EntityType="CovidSafeER.Email" />
+    <AssociationSet Name="PatientEmail" Association="CovidSafeER.PatientEmail">
+      <End Role="Patient" EntitySet="Users" />
+      <End Role="Email" EntitySet="Emails" />
+    </AssociationSet>
+    <AssociationSet Name="DoctorEmail" Association="CovidSafeER.DoctorEmail">
+      <End Role="Doctor" EntitySet="Users" />
+      <End Role="Email" EntitySet="Emails" />
+    </AssociationSet>
+    <AssociationSet Name="DoctorPatient" Association="CovidSafeER.DoctorPatient">
+      <End Role="Doctor" EntitySet="Users" />
+      <End Role="Patient" EntitySet="Users" />
+    </AssociationSet>
+    <EntitySet Name="Broadcasts" EntityType="CovidSafeER.Broadcast" />
+    <AssociationSet Name="DoctorBroadcast" Association="CovidSafeER.DoctorBroadcast">
+      <End Role="Doctor" EntitySet="Users" />
+      <End Role="Broadcast" EntitySet="Broadcasts" />
+    </AssociationSet>
+    <EntitySet Name="Responses" EntityType="CovidSafeER.Response" />
+  </EntityContainer>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userLoginId" Type="String" Nullable="false" />
+    <Property Name="userLevel" Type="String" Nullable="false" />
+    <Property Name="userPassword" Type="String" Nullable="false" />
+    <Property Name="userName" Type="String" Nullable="false" />
+    <Property Name="age" Type="Int32" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="true" />
+    <Property Name="emaild" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Doctor" BaseType="CovidSafeER.User">
+    <NavigationProperty Name="Ratings" Relationship="CovidSafeER.DoctorRating" FromRole="Doctor" ToRole="Rating" />
+    <NavigationProperty Name="Emails" Relationship="CovidSafeER.DoctorEmail" FromRole="Doctor" ToRole="Email" />
+    <NavigationProperty Name="Patients" Relationship="CovidSafeER.DoctorPatient" FromRole="Doctor" ToRole="Patient" />
+    <NavigationProperty Name="Broadcasts" Relationship="CovidSafeER.DoctorBroadcast" FromRole="Doctor" ToRole="Broadcast" />
+  </EntityType>
+  <EntityType Name="Patient" BaseType="CovidSafeER.User">
+    <NavigationProperty Name="Ratings" Relationship="CovidSafeER.PatientRating" FromRole="Patient" ToRole="Rating" />
+    <NavigationProperty Name="Emails" Relationship="CovidSafeER.PatientEmail" FromRole="Patient" ToRole="Email" />
+    <NavigationProperty Name="Doctor" Relationship="CovidSafeER.DoctorPatient" FromRole="Patient" ToRole="Doctor" />
+    <Property Name="Doctor_userId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Administrator" BaseType="CovidSafeER.User">
+    <NavigationProperty Name="CovidCentres" Relationship="CovidSafeER.AdministratorAddCovidCentre" FromRole="Administrator" ToRole="CovidCentre" />
+  </EntityType>
+  <EntityType Name="CovidCentre">
+    <Key>
+      <PropertyRef Name="centreId" />
+    </Key>
+    <Property Name="centreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="centreName" Type="String" Nullable="false" />
+    <Property Name="centreLocation" Type="GeometryPoint" Nullable="false" />
+    <NavigationProperty Name="Administrator" Relationship="CovidSafeER.AdministratorAddCovidCentre" FromRole="CovidCentre" ToRole="Administrator" />
+    <Property Name="Administrator_userId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="AdministratorAddCovidCentre">
+    <End Type="CovidSafeER.Administrator" Role="Administrator" Multiplicity="1" />
+    <End Type="CovidSafeER.CovidCentre" Role="CovidCentre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Administrator">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="CovidCentre">
+        <PropertyRef Name="Administrator_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Patient" Relationship="CovidSafeER.PatientRating" FromRole="Rating" ToRole="Patient" />
+    <Property Name="Patient_userId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Doctor" Relationship="CovidSafeER.DoctorRating" FromRole="Rating" ToRole="Doctor" />
+    <Property Name="Doctor_userId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="PatientRating">
+    <End Type="CovidSafeER.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="CovidSafeER.Rating" Role="Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="Patient_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DoctorRating">
+    <End Type="CovidSafeER.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="CovidSafeER.Rating" Role="Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="Doctor_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="QuestionBank">
+    <Key>
+      <PropertyRef Name="questionId" />
+    </Key>
+    <Property Name="questionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Question" Type="String" Nullable="false" />
+    <Property Name="Option1" Type="String" Nullable="false" />
+    <Property Name="Option2" Type="String" Nullable="false" />
+    <Property Name="Option3" Type="String" Nullable="false" />
+    <Property Name="Option4" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Email">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Patient" Relationship="CovidSafeER.PatientEmail" FromRole="Email" ToRole="Patient" />
+    <Property Name="Patient_userId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Doctor" Relationship="CovidSafeER.DoctorEmail" FromRole="Email" ToRole="Doctor" />
+    <Property Name="Doctor_userId" Type="Int32" Nullable="false" />
+    <Property Name="Body" Type="String" Nullable="false" />
+    <Property Name="Header" Type="String" Nullable="false" />
+    <Property Name="emailDate" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <Association Name="PatientEmail">
+    <End Type="CovidSafeER.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="CovidSafeER.Email" Role="Email" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Email">
+        <PropertyRef Name="Patient_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DoctorEmail">
+    <End Type="CovidSafeER.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="CovidSafeER.Email" Role="Email" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Email">
+        <PropertyRef Name="Doctor_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DoctorPatient">
+    <End Type="CovidSafeER.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="CovidSafeER.Patient" Role="Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="Doctor_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Broadcast">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Doctor" Relationship="CovidSafeER.DoctorBroadcast" FromRole="Broadcast" ToRole="Doctor" />
+    <Property Name="Doctor_userId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="DoctorBroadcast">
+    <End Type="CovidSafeER.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="CovidSafeER.Broadcast" Role="Broadcast" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Broadcast">
+        <PropertyRef Name="Doctor_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Response">
+    <Key>
+      <PropertyRef Name="responceId" />
+    </Key>
+    <Property Name="responceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+</Schema>

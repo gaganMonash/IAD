@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CovidSafeERStoreContainer" CdmEntityContainer="CovidSafeERContainer">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(CovidSafeER.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="userLoginId" ColumnName="userLoginId" />
+          <ScalarProperty Name="userLevel" ColumnName="userLevel" />
+          <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="age" ColumnName="age" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="emaild" ColumnName="emaild" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(CovidSafeER.Administrator)">
+        <MappingFragment StoreEntitySet="Users_Administrator">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(CovidSafeER.Patient)">
+        <MappingFragment StoreEntitySet="Users_Patient">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="Doctor_userId" ColumnName="Doctor_userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(CovidSafeER.Doctor)">
+        <MappingFragment StoreEntitySet="Users_Doctor">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CovidCentres">
+      <EntityTypeMapping TypeName="IsTypeOf(CovidSafeER.CovidCentre)">
+        <MappingFragment StoreEntitySet="CovidCentres">
+          <ScalarProperty Name="centreId" ColumnName="centreId" />
+          <ScalarProperty Name="centreName" ColumnName="centreName" />
+          <ScalarProperty Name="centreLocation" ColumnName="centreLocation" />
+          <ScalarProperty Name="Administrator_userId" ColumnName="Administrator_userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ratings">
+      <EntityTypeMapping TypeName="IsTypeOf(CovidSafeER.Rating)">
+        <MappingFragment StoreEntitySet="Ratings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Patient_userId" ColumnName="Patient_userId" />
+          <ScalarProperty Name="Doctor_userId" ColumnName="Doctor_userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuestionBanks">
+      <EntityTypeMapping TypeName="IsTypeOf(CovidSafeER.QuestionBank)">
+        <MappingFragment StoreEntitySet="QuestionBanks">
+          <ScalarProperty Name="questionId" ColumnName="questionId" />
+          <ScalarProperty Name="Question" ColumnName="Question" />
+          <ScalarProperty Name="Option1" ColumnName="Option1" />
+          <ScalarProperty Name="Option2" ColumnName="Option2" />
+          <ScalarProperty Name="Option3" ColumnName="Option3" />
+          <ScalarProperty Name="Option4" ColumnName="Option4" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Emails">
+      <EntityTypeMapping TypeName="IsTypeOf(CovidSafeER.Email)">
+        <MappingFragment StoreEntitySet="Emails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Patient_userId" ColumnName="Patient_userId" />
+          <ScalarProperty Name="Doctor_userId" ColumnName="Doctor_userId" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="Header" ColumnName="Header" />
+          <ScalarProperty Name="emailDate" ColumnName="emailDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Broadcasts">
+      <EntityTypeMapping TypeName="IsTypeOf(CovidSafeER.Broadcast)">
+        <MappingFragment StoreEntitySet="Broadcasts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Doctor_userId" ColumnName="Doctor_userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Responses">
+      <EntityTypeMapping TypeName="IsTypeOf(CovidSafeER.Response)">
+        <MappingFragment StoreEntitySet="Responses">
+          <ScalarProperty Name="responceId" ColumnName="responceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

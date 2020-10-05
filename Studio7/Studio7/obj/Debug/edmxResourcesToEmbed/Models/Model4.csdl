@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="Broadcast">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Doctor_userId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Users_Doctor" Relationship="Self.FK_DoctorBroadcast" FromRole="Broadcasts" ToRole="Users_Doctor" />
+  </EntityType>
+  <EntityType Name="CovidCentre">
+    <Key>
+      <PropertyRef Name="centreId" />
+    </Key>
+    <Property Name="centreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="centreName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="centreLocation" Type="Geometry" Nullable="false" />
+    <Property Name="Administrator_userId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Users_Administrator" Relationship="Self.FK_AdministratorAddCovidCentre" FromRole="CovidCentres" ToRole="Users_Administrator" />
+  </EntityType>
+  <EntityType Name="Email">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Patient_userId" Type="Int32" Nullable="false" />
+    <Property Name="Doctor_userId" Type="Int32" Nullable="false" />
+    <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Header" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="emailDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Users_Doctor" Relationship="Self.FK_DoctorEmail" FromRole="Emails" ToRole="Users_Doctor" />
+    <NavigationProperty Name="Users_Patient" Relationship="Self.FK_PatientEmail" FromRole="Emails" ToRole="Users_Patient" />
+  </EntityType>
+  <EntityType Name="QuestionBank">
+    <Key>
+      <PropertyRef Name="questionId" />
+    </Key>
+    <Property Name="questionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Option1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Option2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Option3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Option4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Patient_userId" Type="Int32" Nullable="false" />
+    <Property Name="Doctor_userId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Users_Doctor" Relationship="Self.FK_DoctorRating" FromRole="Ratings" ToRole="Users_Doctor" />
+    <NavigationProperty Name="Users_Patient" Relationship="Self.FK_PatientRating" FromRole="Ratings" ToRole="Users_Patient" />
+  </EntityType>
+  <EntityType Name="Respons">
+    <Key>
+      <PropertyRef Name="responceId" />
+    </Key>
+    <Property Name="responceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Units" Relationship="Self.FK__Units__StudentId__440B1D61" FromRole="Students" ToRole="Units" />
+  </EntityType>
+  <EntityType Name="Unit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Student" Relationship="Self.FK__Units__StudentId__440B1D61" FromRole="Units" ToRole="Students" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userLoginId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="userLevel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="userPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="userName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="age" Type="Int32" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="emaild" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users_Administrator" Relationship="Self.FK_Administrator_inherits_User" FromRole="Users" ToRole="Users_Administrator" />
+    <NavigationProperty Name="Users_Doctor" Relationship="Self.FK_Doctor_inherits_User" FromRole="Users" ToRole="Users_Doctor" />
+    <NavigationProperty Name="Users_Patient" Relationship="Self.FK_Patient_inherits_User" FromRole="Users" ToRole="Users_Patient" />
+  </EntityType>
+  <EntityType Name="Users_Administrator">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CovidCentres" Relationship="Self.FK_AdministratorAddCovidCentre" FromRole="Users_Administrator" ToRole="CovidCentres" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Administrator_inherits_User" FromRole="Users_Administrator" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users_Doctor">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Broadcasts" Relationship="Self.FK_DoctorBroadcast" FromRole="Users_Doctor" ToRole="Broadcasts" />
+    <NavigationProperty Name="Emails" Relationship="Self.FK_DoctorEmail" FromRole="Users_Doctor" ToRole="Emails" />
+    <NavigationProperty Name="Ratings" Relationship="Self.FK_DoctorRating" FromRole="Users_Doctor" ToRole="Ratings" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Doctor_inherits_User" FromRole="Users_Doctor" ToRole="Users" />
+    <NavigationProperty Name="Users_Patient" Relationship="Self.FK_DoctorPatient" FromRole="Users_Doctor" ToRole="Users_Patient" />
+  </EntityType>
+  <EntityType Name="Users_Patient">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="Doctor_userId" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Emails" Relationship="Self.FK_PatientEmail" FromRole="Users_Patient" ToRole="Emails" />
+    <NavigationProperty Name="Ratings" Relationship="Self.FK_PatientRating" FromRole="Users_Patient" ToRole="Ratings" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Patient_inherits_User" FromRole="Users_Patient" ToRole="Users" />
+    <NavigationProperty Name="Users_Doctor" Relationship="Self.FK_DoctorPatient" FromRole="Users_Patient" ToRole="Users_Doctor" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DoctorBroadcast">
+    <End Role="Users_Doctor" Type="Self.Users_Doctor" Multiplicity="1" />
+    <End Role="Broadcasts" Type="Self.Broadcast" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users_Doctor">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Broadcasts">
+        <PropertyRef Name="Doctor_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdministratorAddCovidCentre">
+    <End Role="Users_Administrator" Type="Self.Users_Administrator" Multiplicity="1" />
+    <End Role="CovidCentres" Type="Self.CovidCentre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users_Administrator">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="CovidCentres">
+        <PropertyRef Name="Administrator_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DoctorEmail">
+    <End Role="Users_Doctor" Type="Self.Users_Doctor" Multiplicity="1" />
+    <End Role="Emails" Type="Self.Email" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users_Doctor">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Emails">
+        <PropertyRef Name="Doctor_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientEmail">
+    <End Role="Users_Patient" Type="Self.Users_Patient" Multiplicity="1" />
+    <End Role="Emails" Type="Self.Email" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users_Patient">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Emails">
+        <PropertyRef Name="Patient_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DoctorRating">
+    <End Role="Users_Doctor" Type="Self.Users_Doctor" Multiplicity="1" />
+    <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users_Doctor">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Ratings">
+        <PropertyRef Name="Doctor_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRating">
+    <End Role="Users_Patient" Type="Self.Users_Patient" Multiplicity="1" />
+    <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users_Patient">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Ratings">
+        <PropertyRef Name="Patient_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Units__StudentId__440B1D61">
+    <End Role="Students" Type="Self.Student" Multiplicity="1" />
+    <End Role="Units" Type="Self.Unit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Units">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Administrator_inherits_User">
+    <End Role="Users" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Users_Administrator" Type="Self.Users_Administrator" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Users_Administrator">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Doctor_inherits_User">
+    <End Role="Users" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Users_Doctor" Type="Self.Users_Doctor" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Users_Doctor">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Patient_inherits_User">
+    <End Role="Users" Type="Self.User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Users_Patient" Type="Self.Users_Patient" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Users_Patient">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DoctorPatient">
+    <End Role="Users_Doctor" Type="Self.Users_Doctor" Multiplicity="1" />
+    <End Role="Users_Patient" Type="Self.Users_Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users_Doctor">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Users_Patient">
+        <PropertyRef Name="Doctor_userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="DbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="Broadcasts" EntityType="Self.Broadcast" />
+    <EntitySet Name="CovidCentres" EntityType="Self.CovidCentre" />
+    <EntitySet Name="Emails" EntityType="Self.Email" />
+    <EntitySet Name="QuestionBanks" EntityType="Self.QuestionBank" />
+    <EntitySet Name="Ratings" EntityType="Self.Rating" />
+    <EntitySet Name="Responses" EntityType="Self.Respons" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <EntitySet Name="Units" EntityType="Self.Unit" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Users_Administrator" EntityType="Self.Users_Administrator" />
+    <EntitySet Name="Users_Doctor" EntityType="Self.Users_Doctor" />
+    <EntitySet Name="Users_Patient" EntityType="Self.Users_Patient" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DoctorBroadcast" Association="Self.FK_DoctorBroadcast">
+      <End Role="Users_Doctor" EntitySet="Users_Doctor" />
+      <End Role="Broadcasts" EntitySet="Broadcasts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdministratorAddCovidCentre" Association="Self.FK_AdministratorAddCovidCentre">
+      <End Role="Users_Administrator" EntitySet="Users_Administrator" />
+      <End Role="CovidCentres" EntitySet="CovidCentres" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DoctorEmail" Association="Self.FK_DoctorEmail">
+      <End Role="Users_Doctor" EntitySet="Users_Doctor" />
+      <End Role="Emails" EntitySet="Emails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientEmail" Association="Self.FK_PatientEmail">
+      <End Role="Users_Patient" EntitySet="Users_Patient" />
+      <End Role="Emails" EntitySet="Emails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DoctorRating" Association="Self.FK_DoctorRating">
+      <End Role="Users_Doctor" EntitySet="Users_Doctor" />
+      <End Role="Ratings" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRating" Association="Self.FK_PatientRating">
+      <End Role="Users_Patient" EntitySet="Users_Patient" />
+      <End Role="Ratings" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Units__StudentId__440B1D61" Association="Self.FK__Units__StudentId__440B1D61">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="Units" EntitySet="Units" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Administrator_inherits_User" Association="Self.FK_Administrator_inherits_User">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Users_Administrator" EntitySet="Users_Administrator" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Doctor_inherits_User" Association="Self.FK_Doctor_inherits_User">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Users_Doctor" EntitySet="Users_Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patient_inherits_User" Association="Self.FK_Patient_inherits_User">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Users_Patient" EntitySet="Users_Patient" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DoctorPatient" Association="Self.FK_DoctorPatient">
+      <End Role="Users_Doctor" EntitySet="Users_Doctor" />
+      <End Role="Users_Patient" EntitySet="Users_Patient" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
